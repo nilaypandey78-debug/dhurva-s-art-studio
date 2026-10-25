@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Lumière | Fine Art Gallery & Acquisitions",
+  "description": "Exclusive contemporary art gallery showcasing museum-grade paintings and sculptures with curated exhibitions, seamless white-glove checkout, and private curator management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
