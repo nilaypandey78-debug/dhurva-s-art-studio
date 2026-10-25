@@ -1,6 +1,11 @@
 import { Artwork, FramingOption, CustomerOrder } from '../types';
+import heroImg from '../assets/images/gallery_hero_curated_1792846058599.jpg';
+import solitudeImg from '../assets/images/art_painting_solitude_1792846059367.jpg';
+import monolithImg from '../assets/images/art_sculpture_monolith_1792846059660.jpg';
+import botanicalImg from '../assets/images/art_painting_botanical_1792846059830.jpg';
+import celestialImg from '../assets/images/art_sculpture_celestial_1792846059723.jpg';
 
-export const HERO_IMAGE = '/src/assets/images/gallery_hero_curated_1792846058599.jpg';
+export const HERO_IMAGE = heroImg;
 
 export const FRAMING_OPTIONS: FramingOption[] = [
   {
@@ -35,7 +40,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '140 × 140 cm (55 × 55 in)',
     price: 16500,
     category: 'painting',
-    image: '/src/assets/images/art_painting_solitude_1792846059367.jpg',
+    image: solitudeImg,
     exhibition: 'Material Whispers: The Vernissage 2026',
     provenance: 'Acquired directly from Dhurva’s studio atelier; exhibited at Grand Palais Éphémère.',
     certificateCode: 'COA-DHV-2024-089',
@@ -56,7 +61,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '88 × 64 × 42 cm (34.6 × 25.2 × 16.5 in)',
     price: 18200,
     category: 'sculpture',
-    image: '/src/assets/images/art_sculpture_monolith_1792846059660.jpg',
+    image: monolithImg,
     exhibition: 'Silence & Gravity: Spatial Survey',
     provenance: 'Cast at Pangolin Editions; private collection Geneva, acquired 2023.',
     certificateCode: 'COA-DHV-2023-114',
@@ -77,7 +82,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '120 × 100 cm (47.2 × 39.4 in)',
     price: 9800,
     category: 'painting',
-    image: '/src/assets/images/art_painting_botanical_1792846059830.jpg',
+    image: botanicalImg,
     exhibition: 'Material Whispers: The Vernissage 2026',
     provenance: 'Laurent Studio Archive; solo preview at Kunsthalle Basel.',
     certificateCode: 'COA-DHV-2025-202',
@@ -98,7 +103,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '62 × 48 × 30 cm (24.4 × 18.9 × 11.8 in)',
     price: 11400,
     category: 'sculpture',
-    image: '/src/assets/images/art_sculpture_celestial_1792846059723.jpg',
+    image: celestialImg,
     exhibition: 'Forms of Illumination: Winter Solstice',
     provenance: 'Commissioned for the 2024 Biennale di Venezia architecture pavilion.',
     certificateCode: 'COA-DHV-2024-340',
@@ -119,7 +124,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '160 × 120 cm (63 × 47.2 in)',
     price: 15800,
     category: 'painting',
-    image: '/src/assets/images/art_painting_solitude_1792846059367.jpg',
+    image: solitudeImg,
     exhibition: 'Material Whispers: The Vernissage 2026',
     provenance: 'Selected for European Cultural Foundation Biennial.',
     certificateCode: 'COA-DHV-2024-092',
@@ -140,7 +145,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '75 × 52 × 38 cm (29.5 × 20.5 × 15 in)',
     price: 13900,
     category: 'sculpture',
-    image: '/src/assets/images/art_sculpture_monolith_1792846059660.jpg',
+    image: monolithImg,
     exhibition: 'Silence & Gravity: Spatial Survey',
     provenance: 'Collection of the Contemporary Sculpture Trust, St. Ives.',
     certificateCode: 'COA-DHV-2024-118',
@@ -161,7 +166,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '150 × 110 cm (59 × 43.3 in)',
     price: 21000,
     category: 'painting',
-    image: '/src/assets/images/art_painting_botanical_1792846059830.jpg',
+    image: botanicalImg,
     exhibition: 'The Vernissage 2026: Spatial Survey',
     provenance: 'Dhurva Studio Master Vault; certified original.',
     certificateCode: 'COA-DHV-2025-001',
@@ -182,7 +187,7 @@ export const INITIAL_ARTWORKS: Artwork[] = [
     dimensions: '52 × 38 × 24 cm (20.5 × 15 × 9.4 in)',
     price: 9400,
     category: 'sculpture',
-    image: '/src/assets/images/art_sculpture_celestial_1792846059723.jpg',
+    image: celestialImg,
     exhibition: 'Forms of Illumination: Winter Solstice',
     provenance: 'Rostova Atelier, Vienna.',
     certificateCode: 'COA-DHV-2025-342',
@@ -219,7 +224,7 @@ export const INITIAL_ORDERS: CustomerOrder[] = [
         price: 16500,
         framingName: 'Floating Solid Walnut Shadowbox',
         framingPrice: 450,
-        image: '/src/assets/images/art_painting_solitude_1792846059367.jpg',
+        image: solitudeImg,
         medium: 'Oil and 24k gold leaf on heavy linen',
         dimensions: '140 × 140 cm',
         certificateCode: 'COA-DHV-2024-089',
@@ -260,7 +265,7 @@ export const INITIAL_ORDERS: CustomerOrder[] = [
         price: 11400,
         framingName: 'Gallery Stretched Canvas / Raw Studio Plinth',
         framingPrice: 0,
-        image: '/src/assets/images/art_sculpture_celestial_1792846059723.jpg',
+        image: celestialImg,
         medium: 'Hand-carved Spanish alabaster and brushed satin brass',
         dimensions: '62 × 48 × 30 cm',
         certificateCode: 'COA-DHV-2024-340',
