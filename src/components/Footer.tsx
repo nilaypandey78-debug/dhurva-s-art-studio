@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { Lock, ShieldCheck, ArrowRight, Check } from 'lucide-react';
 import { useGallery } from '../context/GalleryContext';
 
@@ -22,55 +23,72 @@ export const Footer: React.FC = () => {
     }
   };
 
+  const footerColumnVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
+  };
+
   return (
-    <footer className="bg-[#1C1A19] text-stone-300 pt-16 pb-12 border-t border-stone-800">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="bg-[#1C1A19] text-stone-300 pt-16 pb-12 border-t border-stone-800 overflow-hidden">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+          },
+        }}
+        className="max-w-7xl mx-auto px-6"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-stone-800">
           {/* Brand & Wordmark */}
-          <div className="lg:col-span-4 space-y-4">
-            <span className="text-xl font-serif tracking-[0.16em] uppercase text-stone-100 block">
+          <motion.div variants={footerColumnVariants} className="lg:col-span-4 space-y-4">
+            <span className="text-xl font-cormorant tracking-[0.16em] uppercase text-stone-100 block font-medium smooth-font">
               Dhurva's Art Studio & Gallery
             </span>
-            <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
+            <p className="text-xs text-stone-400 leading-relaxed max-w-sm smooth-font">
               An international studio and gallery representing contemporary masters of painting and sculpture. All acquisitions are curated, certified, and dispatched via temperature-regulated fine art courier.
             </p>
             <div className="pt-2 text-xs text-stone-500 font-mono space-y-1">
               <div>Paris · London · Geneva · New York</div>
               <div>© 2026 Dhurva's Art Studio & Gallery. All rights reserved.</div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Nav */}
-          <div className="lg:col-span-2 space-y-3 text-xs">
+          <motion.div variants={footerColumnVariants} className="lg:col-span-2 space-y-3 text-xs">
             <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
               Collection
             </h4>
             <ul className="space-y-2 text-stone-400">
               <li>
-                <a href="#curated-works" className="hover:text-stone-100 transition-colors">
+                <a href="#curated-works" className="inline-block hover:text-white hover:translate-x-1 transition-all">
                   Original Paintings
                 </a>
               </li>
               <li>
-                <a href="#curated-works" className="hover:text-stone-100 transition-colors">
+                <a href="#curated-works" className="inline-block hover:text-white hover:translate-x-1 transition-all">
                   Bronze & Stone Sculptures
                 </a>
               </li>
               <li>
-                <a href="#exhibitions" className="hover:text-stone-100 transition-colors">
+                <a href="#exhibitions" className="inline-block hover:text-white hover:translate-x-1 transition-all">
                   The Vernissage 2026
                 </a>
               </li>
               <li>
-                <a href="#craftsmanship" className="hover:text-stone-100 transition-colors">
+                <a href="#craftsmanship" className="inline-block hover:text-white hover:translate-x-1 transition-all">
                   Provenance Ledger
                 </a>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Salons & Hours */}
-          <div className="lg:col-span-3 space-y-3 text-xs">
+          <motion.div variants={footerColumnVariants} className="lg:col-span-3 space-y-3 text-xs">
             <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
               Gallery Salons
             </h4>
@@ -87,21 +105,25 @@ export const Footer: React.FC = () => {
                 Tuesday – Sunday 10:00 – 19:00 CET
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Curatorial Gazette / Newsletter */}
-          <div className="lg:col-span-3 space-y-3">
+          <motion.div variants={footerColumnVariants} className="lg:col-span-3 space-y-3">
             <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
               Curatorial Gazette
             </h4>
-            <p className="text-xs text-stone-400">
+            <p className="text-xs text-stone-400 smooth-font">
               Receive private catalog previews and invitations to vernissages before public release.
             </p>
             {subscribed ? (
-              <div className="p-3 bg-stone-900 border border-stone-700 text-stone-200 text-xs rounded-sm flex items-center gap-2">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-3 bg-stone-900 border border-emerald-500/50 text-stone-200 text-xs rounded-sm flex items-center gap-2"
+              >
                 <Check className="w-4 h-4 text-emerald-400" />
                 <span>Subscription confirmed. Portfolio enclosed soon.</span>
-              </div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
                 <input
@@ -110,18 +132,20 @@ export const Footer: React.FC = () => {
                   placeholder="collector@domain.com"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="w-full p-2 bg-stone-900 border border-stone-700 text-stone-100 text-xs rounded-sm focus:border-stone-400 focus:outline-none"
+                  className="w-full p-2.5 bg-stone-900 border border-stone-700 text-stone-100 text-xs rounded-sm focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 focus:outline-none transition-all"
                 />
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   type="submit"
                   aria-label="Subscribe"
-                  className="px-3 bg-stone-100 hover:bg-white text-stone-900 text-xs font-semibold rounded-sm transition-colors flex items-center justify-center shrink-0"
+                  className="px-3.5 bg-stone-100 hover:bg-white text-stone-900 text-xs font-semibold rounded-sm transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
               </form>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* Operational Bottom Ribbon & Discreet Admin Entry */}
@@ -135,9 +159,11 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Password-protected Admin Panel trigger */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleCuratorClick}
-            className="flex items-center gap-1.5 text-stone-400 hover:text-stone-100 transition-colors cursor-pointer py-1 px-2.5 border border-stone-800 rounded-sm hover:border-stone-600"
+            className="flex items-center gap-1.5 text-stone-400 hover:text-stone-100 transition-colors cursor-pointer py-1 px-2.5 border border-stone-800 rounded-sm hover:border-stone-600 bg-stone-900/60"
           >
             {isAdminLoggedIn ? (
               <>
@@ -150,9 +176,9 @@ export const Footer: React.FC = () => {
                 <span>Curator Backstage Access</span>
               </>
             )}
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };

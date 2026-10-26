@@ -8,8 +8,6 @@ export const AdminAuthModal: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  if (!isAdminAuthOpen) return null;
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const success = loginAdmin(password);
@@ -23,13 +21,22 @@ export const AdminAuthModal: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4">
+      {isAdminAuthOpen && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="relative w-full max-w-md bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm p-8 text-center"
+          key="admin-auth-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4"
         >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-md bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm p-8 text-center"
+          >
           <button
             onClick={() => {
               setIsAdminAuthOpen(false);
@@ -97,7 +104,8 @@ export const AdminAuthModal: React.FC = () => {
             </code>
           </div>
         </motion.div>
-      </div>
-    </AnimatePresence>
-  );
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 };

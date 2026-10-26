@@ -3,19 +3,111 @@
 @layer base {
   :root {
     --font-serif: "Playfair Display", Georgia, serif;
+    --font-cormorant: "Cormorant Garamond", "Playfair Display", Georgia, serif;
     --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   }
 
-  body {
+  html, body {
     font-family: var(--font-sans);
     background-color: #FBF9F5;
     color: #1C1917;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, .font-serif {
     font-family: var(--font-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
+
+  .font-cormorant {
+    font-family: var(--font-cormorant);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-optical-sizing: auto;
+  }
+}
+
+/* Smooth typography and gradient text hardware acceleration */
+.smooth-font {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+.smooth-gradient-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Nav Link Animated Underline */
+.nav-link-animated {
+  position: relative;
+  display: inline-block;
+}
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: currentColor;
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link-animated:hover::after,
+.nav-link-animated.active::after {
+  width: 100%;
+}
+
+/* Shimmer Light Sweep for Premium CTAs */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.animate-shimmer-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.animate-shimmer-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer-sweep 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Subtle Floating Animation */
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float-subtle {
+  animation: float-subtle 6s ease-in-out infinite;
 }
 
 /* Custom smooth transitions & gallery aesthetics */
@@ -40,4 +132,14 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #B3A895;
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

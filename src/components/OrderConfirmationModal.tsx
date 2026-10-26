@@ -6,21 +6,29 @@ import { useGallery } from '../context/GalleryContext';
 export const OrderConfirmationModal: React.FC = () => {
   const { confirmedOrder, setConfirmedOrder, setIsAdminPanelOpen, isAdminLoggedIn } = useGallery();
 
-  if (!confirmedOrder) return null;
-
   const handlePrint = () => {
     window.print();
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+      {confirmedOrder && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="relative w-full max-w-2xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden flex flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setConfirmedOrder(null)}
         >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-2xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden flex flex-col"
+          >
           {/* Top Banner */}
           <div className="p-6 bg-stone-900 text-stone-50 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -143,16 +151,19 @@ export const OrderConfirmationModal: React.FC = () => {
                 </button>
               )}
 
-              <button
-                onClick={() => setConfirmedOrder(null)}
-                className="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs uppercase tracking-wider font-medium rounded-sm transition-colors"
-              >
-                Return to Gallery
-              </button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setConfirmedOrder(null)}
+                  className="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs uppercase tracking-wider font-medium rounded-sm transition-colors cursor-pointer"
+                >
+                  Return to Gallery
+                </motion.button>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
-      </div>
+      )}
     </AnimatePresence>
   );
 };

@@ -39,12 +39,20 @@ export const ArtworkModal: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 lg:p-8"
+        onClick={() => setSelectedArtwork(null)}
+      >
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
+          onClick={(e) => e.stopPropagation()}
+          initial={{ opacity: 0, scale: 0.94, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-6xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden max-h-[92vh] flex flex-col"
         >
           {/* Top Bar with Accession Number & Close */}
@@ -56,13 +64,15 @@ export const ArtworkModal: React.FC = () => {
               <span className="text-stone-600">{selectedArtwork.exhibition}</span>
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setSelectedArtwork(null)}
               aria-label="Close modal"
-              className="p-1 text-stone-500 hover:text-stone-900 transition-colors rounded-sm"
+              className="p-1 text-stone-500 hover:text-stone-900 transition-colors rounded-sm cursor-pointer"
             >
               <X className="w-5 h-5" />
-            </button>
+            </motion.button>
           </div>
 
           {/* Modal Body: Split 2-Column Responsive */}
@@ -231,13 +241,15 @@ export const ArtworkModal: React.FC = () => {
                 {!isSold ? (
                   <>
                     <div className="grid grid-cols-2 gap-3">
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={handleAddToCart}
-                        className="w-full py-3 px-4 border border-stone-900 text-stone-900 hover:bg-stone-100 text-xs uppercase tracking-widest font-semibold transition-all rounded-sm flex items-center justify-center gap-2"
+                        className="w-full py-3 px-4 border border-stone-900 text-stone-900 hover:bg-stone-100 text-xs uppercase tracking-widest font-semibold transition-all rounded-sm flex items-center justify-center gap-2 cursor-pointer"
                       >
                         {addedNotice ? (
                           <>
-                            <Check className="w-4 h-4 text-emerald-700" />
+                            <Check className="w-4 h-4 text-emerald-700 animate-bounce" />
                             <span>Added to Bag</span>
                           </>
                         ) : (
@@ -246,14 +258,16 @@ export const ArtworkModal: React.FC = () => {
                             <span>Add to Bag</span>
                           </>
                         )}
-                      </button>
+                      </motion.button>
 
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={handleBuyNow}
-                        className="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 text-stone-50 text-xs uppercase tracking-widest font-semibold transition-all rounded-sm shadow-sm"
+                        className="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 text-stone-50 text-xs uppercase tracking-widest font-semibold transition-all rounded-sm shadow-sm cursor-pointer animate-shimmer-sweep"
                       >
                         Acquire Now
-                      </button>
+                      </motion.button>
                     </div>
 
                     <div className="text-center">
@@ -269,7 +283,7 @@ export const ArtworkModal: React.FC = () => {
                     </p>
                     <button
                       onClick={() => setSelectedArtwork(null)}
-                      className="mt-2 text-xs uppercase tracking-wider text-stone-900 underline font-medium"
+                      className="mt-2 text-xs uppercase tracking-wider text-stone-900 underline font-medium cursor-pointer"
                     >
                       Browse Available Paintings & Sculptures
                     </button>
@@ -279,7 +293,7 @@ export const ArtworkModal: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </AnimatePresence>
   );
 };

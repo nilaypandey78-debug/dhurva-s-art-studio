@@ -63,7 +63,7 @@ export const AdminPanel: React.FC = () => {
     scaleHeightCm: 120,
   });
 
-  if (!isAdminPanelOpen || !isAdminLoggedIn) return null;
+  const isOpen = isAdminPanelOpen && isAdminLoggedIn;
 
   // Filtered Orders
   const filteredOrders = orders.filter((ord) => {
@@ -113,13 +113,22 @@ export const AdminPanel: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/90 backdrop-blur-md flex flex-col justify-start p-2 sm:p-6">
+      {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 15 }}
-          className="relative w-full max-w-7xl mx-auto bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm flex flex-col min-h-[92vh] overflow-hidden"
+          key="admin-panel-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/90 backdrop-blur-md flex flex-col justify-start p-2 sm:p-6"
         >
+          <motion.div
+            initial={{ opacity: 0, y: 15, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 15, scale: 0.98 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-7xl mx-auto bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm flex flex-col min-h-[92vh] overflow-hidden"
+          >
           {/* Top Admin Navigation Bar */}
           <div className="px-6 py-4 bg-stone-900 text-stone-100 flex flex-wrap items-center justify-between gap-4 border-b border-stone-800 shrink-0">
             <div className="flex items-center gap-4">
@@ -857,7 +866,8 @@ export const AdminPanel: React.FC = () => {
             </div>
           )}
         </motion.div>
-      </div>
-    </AnimatePresence>
-  );
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 };

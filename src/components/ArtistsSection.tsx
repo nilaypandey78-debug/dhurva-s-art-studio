@@ -96,7 +96,19 @@ export const ArtistsSection: React.FC = () => {
       </div>
 
       {/* Artists Roster Cards - Touching selects and expands inline */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mt-10">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+          },
+        }}
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mt-10"
+      >
         {artists.map((artist) => {
           const isSelected = artist.id === activeArtistId;
           const isDhurva = artist.id === 'artist-dhurva';
@@ -108,13 +120,19 @@ export const ArtistsSection: React.FC = () => {
           ).length;
 
           return (
-            <div
+            <motion.div
               key={artist.id}
+              variants={{
+                hidden: { opacity: 0, y: 24 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+              }}
+              whileHover={{ y: -7, transition: { duration: 0.25 } }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleSelectArtist(artist)}
               className={`group cursor-pointer rounded-sm overflow-hidden flex flex-col justify-between transition-all duration-300 border text-left ${
                 isSelected
-                  ? 'border-stone-900 ring-2 ring-stone-900 bg-[#F5F2EB] shadow-md -translate-y-1'
-                  : 'border-stone-200 hover:border-stone-400 bg-white hover:-translate-y-0.5'
+                  ? 'border-amber-900 ring-2 ring-amber-800/80 bg-[#F5F2EB] shadow-lg -translate-y-1'
+                  : 'border-stone-200 hover:border-amber-400/80 bg-white hover:shadow-md'
               }`}
             >
               {/* Portrait */}
@@ -123,25 +141,25 @@ export const ArtistsSection: React.FC = () => {
                   src={artist.portrait}
                   alt={artist.name}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-108"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent pointer-events-none" />
 
                 {isDhurva && (
                   <div className="absolute top-2 left-2">
-                    <span className="text-[9px] uppercase tracking-wider font-mono bg-stone-900 text-amber-300 px-2 py-0.5 font-bold flex items-center gap-1 shadow-xs">
-                      <Sparkles className="w-2.5 h-2.5 text-amber-300" />
+                    <span className="text-[9px] uppercase tracking-wider font-mono bg-stone-900/90 backdrop-blur-xs text-amber-300 px-2 py-0.5 font-bold flex items-center gap-1 shadow-xs border border-amber-300/30">
+                      <Sparkles className="w-2.5 h-2.5 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
                       <span>Founder</span>
                     </span>
                   </div>
                 )}
 
-                <div className="absolute bottom-2 left-2 right-2 text-white">
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white">
                   <div className="text-[10px] uppercase font-mono tracking-widest text-stone-300 line-clamp-1">
                     {artist.origin}
                   </div>
-                  <h3 className="text-sm font-serif font-bold text-white leading-tight">
+                  <h3 className="text-sm sm:text-base font-cormorant font-bold text-white leading-tight smooth-font">
                     {artist.name}
                   </h3>
                 </div>
@@ -153,18 +171,18 @@ export const ArtistsSection: React.FC = () => {
                   {artCount} Artwork{artCount === 1 ? '' : 's'}
                 </span>
                 <span
-                  className={`text-[11px] font-semibold uppercase tracking-wider mt-2 flex items-center gap-1 ${
-                    isSelected ? 'text-amber-800' : 'text-stone-700 group-hover:text-stone-900'
+                  className={`text-[11px] font-semibold uppercase tracking-wider mt-2 flex items-center gap-1 transition-colors ${
+                    isSelected ? 'text-amber-800' : 'text-stone-700 group-hover:text-amber-900'
                   }`}
                 >
                   <span>{isSelected ? 'Viewing Art' : 'Show Art'}</span>
-                  <ArrowRight className="w-3 h-3" />
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* INLINE ARTWORKS SHOWCASE (Reveals right here on the same page when an artist is touched!) */}
       <div ref={portfolioRef} className="mt-14 scroll-mt-24">
@@ -238,9 +256,10 @@ export const ArtistsSection: React.FC = () => {
                     const isReserved = art.status === 'Reserved';
 
                     return (
-                      <div
+                      <motion.div
                         key={art.id}
-                        className="bg-white border border-stone-200/90 rounded-sm overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-md transition-all group"
+                        whileHover={{ y: -6, transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] } }}
+                        className="bg-white border border-stone-200/90 hover:border-amber-400/80 rounded-sm overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-lg transition-all group"
                       >
                         {/* Artwork Image */}
                         <div
@@ -251,7 +270,7 @@ export const ArtistsSection: React.FC = () => {
                             src={art.image}
                             alt={art.title}
                             referrerPolicy="no-referrer"
-                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-106"
                           />
 
                           {/* Status Tag */}
@@ -288,7 +307,7 @@ export const ArtistsSection: React.FC = () => {
                             </div>
                             <h5
                               onClick={() => setSelectedArtwork(art)}
-                              className="font-serif font-bold text-stone-900 text-base group-hover:text-amber-800 transition-colors cursor-pointer mt-0.5"
+                              className="font-cormorant font-bold text-stone-900 text-lg group-hover:text-amber-800 transition-colors cursor-pointer mt-0.5 smooth-font"
                             >
                               {art.title}
                             </h5>
@@ -307,24 +326,28 @@ export const ArtistsSection: React.FC = () => {
 
                             {!isSold ? (
                               <div className="flex items-center gap-2">
-                                <button
+                                <motion.button
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.92 }}
                                   onClick={(e) => handleQuickAdd(art, e)}
                                   title="Add to Acquisition Bag"
                                   className="p-2 border border-stone-300 hover:border-stone-900 text-stone-800 rounded-sm transition-colors cursor-pointer"
                                 >
                                   {addedNoticeId === art.id ? (
-                                    <Check className="w-4 h-4 text-emerald-700" />
+                                    <Check className="w-4 h-4 text-emerald-700 animate-bounce" />
                                   ) : (
                                     <ShoppingBag className="w-4 h-4" />
                                   )}
-                                </button>
+                                </motion.button>
 
-                                <button
+                                <motion.button
+                                  whileHover={{ scale: 1.03, y: -1 }}
+                                  whileTap={{ scale: 0.97 }}
                                   onClick={(e) => handleQuickBuy(art, e)}
-                                  className="px-3.5 py-2 bg-stone-900 hover:bg-stone-800 text-stone-50 text-xs uppercase tracking-wider font-medium rounded-sm transition-colors shadow-xs cursor-pointer"
+                                  className="px-3.5 py-2 bg-stone-900 hover:bg-stone-800 text-stone-50 text-xs uppercase tracking-wider font-medium rounded-sm transition-colors shadow-xs cursor-pointer animate-shimmer-sweep"
                                 >
                                   Buy Now
-                                </button>
+                                </motion.button>
                               </div>
                             ) : (
                               <span className="text-xs text-stone-400 font-mono uppercase">
@@ -333,7 +356,7 @@ export const ArtistsSection: React.FC = () => {
                             )}
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -348,19 +371,23 @@ export const ArtistsSection: React.FC = () => {
                     <span className="text-xs uppercase tracking-widest text-amber-800 font-mono font-semibold">
                       Private Commission
                     </span>
-                    <h5 className="font-serif font-bold text-lg text-stone-900 mt-0.5">
+                    <h5 className="font-cormorant font-bold text-xl text-stone-900 mt-0.5 smooth-font">
                       Commission an Original Work by {activeArtist.name}
                     </h5>
                   </div>
                 </div>
 
                 {commissionSent ? (
-                  <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs rounded-sm flex items-center gap-2">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs rounded-sm flex items-center gap-2"
+                  >
                     <Check className="w-4 h-4 text-emerald-600" />
                     <span>
                       Commission request transmitted. Our studio registrar will present your brief to {activeArtist.name} within 24 hours.
                     </span>
-                  </div>
+                  </motion.div>
                 ) : (
                   <form onSubmit={handleCommissionSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                     <input
@@ -369,7 +396,7 @@ export const ArtistsSection: React.FC = () => {
                       placeholder="Your Full Name *"
                       value={commissionForm.name}
                       onChange={(e) => setCommissionForm({ ...commissionForm, name: e.target.value })}
-                      className="p-2.5 bg-white border border-stone-300 rounded-sm focus:border-stone-900 focus:outline-none"
+                      className="p-2.5 bg-white border border-stone-300 rounded-sm focus:border-amber-600 focus:ring-1 focus:ring-amber-500/30 focus:outline-none transition-all"
                     />
                     <input
                       type="email"
@@ -377,15 +404,17 @@ export const ArtistsSection: React.FC = () => {
                       placeholder="Your Email Address *"
                       value={commissionForm.email}
                       onChange={(e) => setCommissionForm({ ...commissionForm, email: e.target.value })}
-                      className="p-2.5 bg-white border border-stone-300 rounded-sm focus:border-stone-900 focus:outline-none"
+                      className="p-2.5 bg-white border border-stone-300 rounded-sm focus:border-amber-600 focus:ring-1 focus:ring-amber-500/30 focus:outline-none transition-all"
                     />
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       type="submit"
-                      className="py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white font-semibold uppercase tracking-wider rounded-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="py-2.5 px-4 bg-stone-900 hover:bg-stone-800 text-white font-semibold uppercase tracking-wider rounded-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer animate-shimmer-sweep"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Request Atelier Commission</span>
-                    </button>
+                    </motion.button>
                   </form>
                 )}
               </div>

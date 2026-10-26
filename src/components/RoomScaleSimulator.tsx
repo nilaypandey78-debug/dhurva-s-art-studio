@@ -14,9 +14,8 @@ export const RoomScaleSimulator: React.FC = () => {
 
   const [wallColor, setWallColor] = useState<'alabaster' | 'limestone' | 'charcoal'>('limestone');
 
-  if (!isRoomSimulatorOpen || !selectedArtwork) return null;
-
-  const isSold = selectedArtwork.status === 'Sold';
+  const isOpenAndValid = isRoomSimulatorOpen && !!selectedArtwork;
+  const isSold = selectedArtwork?.status === 'Sold';
 
   const wallBgClasses = {
     alabaster: 'bg-[#F7F5F0]',
@@ -26,13 +25,23 @@ export const RoomScaleSimulator: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4 md:p-6">
+      {isOpenAndValid && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.96 }}
-          className="relative w-full max-w-5xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden flex flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/85 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
+          onClick={() => setIsRoomSimulatorOpen(false)}
         >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-5xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden flex flex-col"
+          >
           {/* Header Controls */}
           <div className="px-6 py-4 border-b border-stone-200 flex items-center justify-between bg-stone-100">
             <div>
@@ -169,8 +178,9 @@ export const RoomScaleSimulator: React.FC = () => {
               </div>
             )}
           </div>
+          </motion.div>
         </motion.div>
-      </div>
+      )}
     </AnimatePresence>
   );
 };

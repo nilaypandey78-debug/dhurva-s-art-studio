@@ -48,7 +48,7 @@ export const CheckoutModal: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  if (!isCheckoutOpen || checkoutItems.length === 0) return null;
+  const isOpenAndValid = isCheckoutOpen && checkoutItems.length > 0;
 
   const subtotal = checkoutItems.reduce((acc, item) => {
     return acc + (item.artwork.price + item.framing.price) * item.quantity;
@@ -120,28 +120,40 @@ export const CheckoutModal: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      {isOpenAndValid && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.96 }}
-          className="relative w-full max-w-4xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden max-h-[92vh] flex flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 lg:p-8"
+          onClick={() => setIsCheckoutOpen(false)}
         >
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-stone-200 bg-stone-100 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-2">
-              <Lock className="w-4 h-4 text-stone-700" />
-              <h2 className="text-sm font-serif uppercase tracking-widest text-stone-900 font-bold">
-                Archival Acquisition Checkout
-              </h2>
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-4xl bg-[#FBF9F5] border border-stone-300 shadow-2xl rounded-sm overflow-hidden max-h-[92vh] flex flex-col"
+          >
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-stone-200 bg-stone-100 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <Lock className="w-4 h-4 text-stone-700" />
+                <h2 className="text-sm font-serif uppercase tracking-widest text-stone-900 font-bold">
+                  Archival Acquisition Checkout
+                </h2>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsCheckoutOpen(false)}
+                className="p-1 text-stone-500 hover:text-stone-900 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </motion.button>
             </div>
-            <button
-              onClick={() => setIsCheckoutOpen(false)}
-              className="p-1 text-stone-500 hover:text-stone-900"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
 
           {/* Form and Summary Container */}
           <form onSubmit={handleSubmitOrder} className="overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-stone-200">
@@ -531,8 +543,9 @@ export const CheckoutModal: React.FC = () => {
               </div>
             </div>
           </form>
+          </motion.div>
         </motion.div>
-      </div>
+      )}
     </AnimatePresence>
   );
 };
