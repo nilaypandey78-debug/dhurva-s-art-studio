@@ -1,6 +1,6 @@
 {
-  "name": "Atelier Lumière | Fine Art Gallery & Acquisitions",
-  "description": "Exclusive contemporary art gallery showcasing museum-grade paintings and sculptures with curated exhibitions, seamless white-glove checkout, and private curator management.",
+  "name": "KNMA | Kiran Nadar Museum of Art & Dhurva Studio",
+  "description": "Kiran Nadar Museum of Art (KNMA) & Dhurva Studio showcasing modern and contemporary South Asian masterworks, museum exhibitions, educational workshops, and verified fine art acquisitions.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -172,37 +172,37 @@ export const ShowcasePurchasePage: React.FC = () => {
               whileHover={{ scale: 1.02, x: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setCurrentPage('home')}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium uppercase tracking-wider text-stone-700 hover:text-stone-950 bg-stone-100 hover:bg-stone-200/90 border border-stone-300/80 rounded-sm transition-all cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-stone-700 hover:text-stone-950 bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded-xs transition-all cursor-pointer shadow-2xs"
             >
-              <ArrowLeft className="w-3.5 h-3.5 text-amber-700" />
-              <span>Back to Exhibition Home</span>
+              <ArrowLeft className="w-3.5 h-3.5 text-blue-700" />
+              <span>Back to KNMA Museum</span>
             </motion.button>
 
             <span className="text-stone-300 hidden sm:inline">|</span>
 
             <div className="hidden sm:flex items-center gap-2 text-xs text-stone-500 font-mono">
               <span className="hover:text-stone-800 cursor-pointer" onClick={() => setCurrentPage('home')}>
-                Dhurva's Studio
+                KNMA & Dhurva Studio
               </span>
               <span>/</span>
-              <span className="text-amber-900 font-semibold tracking-wide uppercase">
-                Showcase & Purchasing Salon
+              <span className="text-blue-800 font-bold tracking-wide uppercase">
+                Showcase & Acquisitions Salon
               </span>
             </div>
           </div>
 
           {/* Quick Currency Selector & Bag Shortcut */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-xs font-mono text-stone-600 bg-white border border-stone-200 px-2.5 py-1 rounded-sm shadow-2xs">
-              <Globe className="w-3.5 h-3.5 text-amber-600" />
-              <span className="uppercase text-[11px] font-sans tracking-wider text-stone-400">Currency:</span>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-stone-600 bg-white border border-stone-200 px-2.5 py-1 rounded-xs shadow-2xs">
+              <Globe className="w-3.5 h-3.5 text-blue-700" />
+              <span className="uppercase text-[11px] font-sans tracking-wider text-stone-500 font-semibold">Currency:</span>
               <select
                 value={selectedCurrency.code}
                 onChange={(e) => {
                   const found = CURRENCIES.find((c) => c.code === e.target.value);
                   if (found) setSelectedCurrency(found);
                 }}
-                className="bg-transparent font-semibold text-stone-800 cursor-pointer focus:outline-hidden"
+                className="bg-transparent font-bold text-stone-900 cursor-pointer focus:outline-hidden"
               >
                 {CURRENCIES.map((curr) => (
                   <option key={curr.code} value={curr.code}>
@@ -216,7 +216,7 @@ export const ShowcasePurchasePage: React.FC = () => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => setIsCartOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1 bg-stone-900 hover:bg-amber-950 text-stone-100 rounded-sm text-xs font-medium transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1 bg-[#111827] hover:bg-blue-800 text-white rounded-xs text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
               <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
               <span className="hidden md:inline">Acquisitions</span>
@@ -226,30 +226,26 @@ export const ShowcasePurchasePage: React.FC = () => {
       </nav>
 
       {/* Main Showcase Hero Section */}
-      <section className="relative pt-12 pb-10 px-6 overflow-hidden border-b border-stone-200/70 bg-gradient-to-b from-amber-50/40 via-stone-50/60 to-transparent">
-        {/* Subtle decorative glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl pointer-events-none -z-10" />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-stone-300/20 rounded-full blur-3xl pointer-events-none -z-10" />
-
+      <section className="relative pt-12 pb-10 px-6 overflow-hidden border-b border-stone-200 bg-white">
         <div className="max-w-7xl mx-auto">
           {/* Eyebrow badge */}
           <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 rounded-full text-[11px] font-mono tracking-[0.2em] uppercase font-semibold bg-amber-100/90 text-amber-900 border border-amber-300/80 shadow-2xs inline-flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-amber-600 animate-spin" style={{ animationDuration: '6s' }} />
-              Collector Acquisitions Salon
+            <span className="px-3 py-1 rounded-xs text-[11px] font-mono tracking-wider uppercase font-bold bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs inline-flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-blue-600" />
+              KNMA & Studio Acquisitions Salon
             </span>
             <span className="text-xs text-stone-500 font-mono hidden md:inline">
-              Direct Artist Studio Access • Worldwide Insured Transit
+              Direct Studio Access • Worldwide Insured Art Freight • Authenticity Guaranteed
             </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-8 space-y-3">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-cormorant font-normal text-stone-900 tracking-tight leading-[1.08]">
-                Masterworks Showcase & Purchasing
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-stone-900 tracking-tight leading-[1.08]">
+                Masterworks Showcase & Acquisitions
               </h1>
-              <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-2xl font-light">
-                Discover singular original works available for private acquisition. Every masterwork includes an archival Certificate of Authenticity signed verso, bespoke conservation framing of your choice, and insured white-glove transport to your residence or institution.
+              <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
+                Discover singular original works available for private curation. Every masterwork includes a museum Certificate of Authenticity signed verso, custom conservation framing, and insured white-glove transport to your residence or institution.
               </p>
             </div>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, Lock, ShieldCheck, Menu, X, ArrowRight, Sparkles } from 'lucide-react';
+import { ShoppingBag, Lock, ShieldCheck, Menu, X, ArrowRight, Sparkles, MapPin, Clock, Calendar, Ticket } from 'lucide-react';
 import { useGallery } from '../context/GalleryContext';
 
 export const Header: React.FC = () => {
@@ -19,10 +19,9 @@ export const Header: React.FC = () => {
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Monitor scroll depth for dynamic navbar elevation and blur
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 25) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -59,53 +58,84 @@ export const Header: React.FC = () => {
   };
 
   const navLinks = [
-    { label: 'Curated Works', href: '#curated-works' },
-    { label: 'Studio Artists', href: '#studio-artists' },
     { label: 'Exhibitions', href: '#exhibitions' },
-    { label: 'Provenance', href: '#craftsmanship' },
-    { label: 'Private Salon', href: '#private-viewing' },
+    { label: 'Collection & Masters', href: '#curated-works' },
+    { label: 'Studio Masters', href: '#studio-artists' },
+    { label: 'Programs & Talks', href: '#programs' },
+    { label: 'Plan Your Visit', href: '#visit' },
   ];
 
   return (
     <>
+      {/* KNMA Operational Announcement Ribbon */}
+      <div className="bg-[#111827] text-white text-[11px] font-sans font-medium py-1.5 px-4 sm:px-6 border-b border-stone-800">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs bg-blue-600 text-[10px] font-bold uppercase tracking-wider text-white">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              Open Today
+            </span>
+            <span className="text-stone-300">
+              New Delhi (Saket) & Noida · Open Tue–Sun 10:30 AM – 6:30 PM
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4 text-stone-300 text-[11px]">
+            <span className="hidden md:inline font-semibold text-amber-400">
+              Admission is Free for All Visitors
+            </span>
+            <span className="hidden md:inline text-stone-600">·</span>
+            <a
+              href="#visit"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('#visit');
+              }}
+              className="text-stone-200 hover:text-white underline underline-offset-2 flex items-center gap-1 cursor-pointer"
+            >
+              <Ticket className="w-3 h-3 text-blue-400" />
+              <span>Visitor Guidelines</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Museum Navigation Header */}
       <motion.header
-        initial={{ y: -60, opacity: 0 }}
+        initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`sticky top-0 z-40 transition-all duration-300 ${
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className={`sticky top-0 z-40 transition-all duration-200 ${
           isScrolled
-            ? 'bg-[#FBF9F5]/95 backdrop-blur-md shadow-[0_4px_24px_rgba(28,25,23,0.06)] border-b border-stone-200/90 py-0'
-            : 'bg-[#FBF9F5]/85 backdrop-blur-sm border-b border-stone-200/60 py-1'
+            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-stone-200 py-0'
+            : 'bg-white border-b border-stone-200 py-1'
         }`}
       >
-        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 md:h-18' : 'h-18 md:h-20'}`}>
-          {/* Zone 1: Brand Wordmark */}
+        <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-200 ${isScrolled ? 'h-16' : 'h-18 sm:h-20'}`}>
+          {/* Zone 1: KNMA Identity Wordmark */}
           <button
             onClick={() => setCurrentPage('home')}
-            className="group flex items-center gap-2.5 text-base sm:text-lg md:text-xl font-cormorant tracking-[0.18em] uppercase text-stone-900 whitespace-nowrap shrink-0 hover:text-amber-900 transition-colors smooth-font text-left cursor-pointer"
+            className="group flex items-center gap-3 text-left cursor-pointer shrink-0"
           >
-            <span className="w-2 h-2 rounded-full bg-amber-500/80 group-hover:scale-125 transition-transform" />
-            <span className="font-semibold">Dhurva's Art Studio & Gallery</span>
+            {/* Geometric Monogram Emblem */}
+            <div className="w-10 h-10 bg-[#111827] text-white flex items-center justify-center font-bold text-base tracking-tighter rounded-xs group-hover:bg-blue-700 transition-colors shadow-xs">
+              <span>KNMA</span>
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-base sm:text-lg font-bold uppercase tracking-tight text-stone-900 group-hover:text-blue-700 transition-colors">
+                  Kiran Nadar Museum of Art
+                </span>
+              </div>
+              <span className="block text-[11px] uppercase tracking-wider font-semibold text-stone-500">
+                & Dhurva Contemporary Studio
+              </span>
+            </div>
           </button>
 
-          {/* Zone 2: Navigation Links with Dedicated Showcase & Purchase Salon Tab */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-[0.16em] font-medium text-stone-600">
-            {/* Dedicated Showcase & Purchase Page Button */}
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => setCurrentPage('showcase')}
-              className={`px-3 py-1.5 rounded-xs transition-all flex items-center gap-1.5 cursor-pointer font-semibold ${
-                currentPage === 'showcase'
-                  ? 'bg-amber-100 text-amber-950 border border-amber-300/80 shadow-2xs ring-1 ring-amber-400/30'
-                  : 'bg-amber-50/70 hover:bg-amber-100/80 text-amber-900 border border-amber-200/80'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
-              <span>Showcase & Purchase</span>
-            </motion.button>
-
-            {/* Standard Nav Links */}
+          {/* Zone 2: Navigation Links with Simple Font */}
+          <nav className="hidden xl:flex items-center gap-7 text-xs uppercase tracking-wider font-semibold text-stone-700">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -114,62 +144,76 @@ export const Header: React.FC = () => {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="nav-link-animated text-stone-600 hover:text-stone-900 transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer"
+                className="nav-link-animated text-stone-700 hover:text-blue-700 transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer"
               >
                 {link.label}
               </a>
             ))}
-          </nav>
 
-          {/* Zone 3: Primary Actions (Cart + Discreet Curator Portal + Mobile Hamburger) */}
-          <div className="flex items-center gap-3 shrink-0">
-            {/* Discreet Admin Lock / Curator Access */}
+            {/* Dedicated Showcase & Purchase Page Button */}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              onClick={handleAdminClick}
-              title={isAdminLoggedIn ? 'Open Curator Dashboard' : 'Curator Portal Access'}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-stone-600 hover:text-stone-900 border border-stone-200 hover:border-amber-400/80 bg-white/70 hover:bg-white rounded-sm transition-all whitespace-nowrap shrink-0 shadow-2xs cursor-pointer"
+              onClick={() => setCurrentPage('showcase')}
+              className={`px-3.5 py-1.5 rounded-xs transition-all flex items-center gap-1.5 cursor-pointer font-bold text-xs uppercase tracking-wider ${
+                currentPage === 'showcase'
+                  ? 'bg-blue-700 text-white shadow-xs'
+                  : 'bg-stone-100 hover:bg-stone-200 text-stone-900 border border-stone-300'
+              }`}
             >
-              {isAdminLoggedIn ? (
-                <>
-                  <ShieldCheck className="w-3.5 h-3.5 text-amber-700 animate-pulse" />
-                  <span className="hidden sm:inline font-medium text-amber-800">Curator Active</span>
-                </>
-              ) : (
-                <>
-                  <Lock className="w-3.5 h-3.5 text-stone-500" />
-                  <span className="hidden sm:inline">Curator</span>
-                </>
-              )}
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Showcase & Acquisitions</span>
             </motion.button>
+          </nav>
 
-            {/* Acquisition Bag / Cart with scale pop animation */}
+          {/* Zone 3: Actions (Plan Visit + Cart + Curator Login + Mobile Toggle) */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Quick Plan Visit CTA on Desktop */}
+            <a
+              href="#visit"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('#visit');
+              }}
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 hover:text-white border border-blue-600 hover:bg-blue-700 rounded-xs transition-all cursor-pointer"
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              <span>Visit Pavilions</span>
+            </a>
+
+            {/* Acquisitions Bag */}
             <motion.button
-              whileHover={{ scale: 1.03, y: -1 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setIsCartOpen(true)}
               aria-label="View Acquisitions Cart"
-              className="relative flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 hover:from-amber-950 hover:to-stone-900 text-stone-50 rounded-sm text-xs uppercase tracking-wider font-medium transition-all whitespace-nowrap shrink-0 shadow-sm cursor-pointer ring-1 ring-amber-400/20"
+              className="relative flex items-center gap-2 px-3.5 py-2 bg-[#111827] hover:bg-blue-800 text-white rounded-xs text-xs uppercase tracking-wider font-semibold transition-all whitespace-nowrap shrink-0 shadow-xs cursor-pointer"
             >
-              <ShoppingBag className="w-4 h-4 text-amber-300" />
+              <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
               <span className="hidden sm:inline">Acquisitions</span>
-              <motion.span
-                key={totalCartCount}
-                initial={{ scale: 1.4, color: '#FCD34D' }}
-                animate={{ scale: 1, color: '#D6D3D1' }}
-                transition={{ duration: 0.3 }}
-                className="tabular-nums font-mono text-stone-300"
-              >
+              <span className="tabular-nums font-mono text-stone-300">
                 ({totalCartCount})
-              </motion.span>
+              </span>
             </motion.button>
 
-            {/* Mobile Menu Hamburger Toggle */}
+            {/* Discreet Admin Lock */}
+            <button
+              onClick={handleAdminClick}
+              title={isAdminLoggedIn ? 'Open Curator Dashboard' : 'Curator Portal Access'}
+              className="flex items-center gap-1.5 px-2.5 py-2 text-xs text-stone-600 hover:text-stone-900 border border-stone-200 hover:border-stone-400 bg-stone-50 rounded-xs transition-all cursor-pointer"
+            >
+              {isAdminLoggedIn ? (
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+              ) : (
+                <Lock className="w-3.5 h-3.5 text-stone-500" />
+              )}
+            </button>
+
+            {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
-              className="lg:hidden p-2 text-stone-700 hover:text-stone-950 hover:bg-stone-200/60 rounded-sm transition-colors cursor-pointer"
+              className="xl:hidden p-2 text-stone-800 hover:bg-stone-100 rounded-xs transition-colors cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -177,60 +221,55 @@ export const Header: React.FC = () => {
         </div>
       </motion.header>
 
-      {/* Animated Mobile Navigation Drawer */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden fixed top-[64px] inset-x-0 bg-[#FBF9F5]/98 backdrop-blur-lg border-b border-stone-300 shadow-xl z-30 overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="xl:hidden fixed top-[100px] inset-x-0 bg-white border-b border-stone-200 shadow-xl z-30 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
-              <nav className="flex flex-col space-y-3">
+              <nav className="flex flex-col space-y-2">
                 {/* Mobile Showcase & Purchase Highlight */}
-                <motion.button
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
+                <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     setCurrentPage('showcase');
                   }}
-                  className="w-full text-left text-sm uppercase tracking-widest font-semibold text-amber-950 bg-amber-100/80 hover:bg-amber-100 p-3 rounded-xs border border-amber-300/80 flex items-center justify-between cursor-pointer"
+                  className="w-full text-left text-xs uppercase tracking-wider font-bold text-white bg-blue-700 hover:bg-blue-800 p-3 rounded-xs flex items-center justify-between cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
-                    <span>Showcase & Purchase</span>
+                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <span>Showcase & Acquisitions Salon</span>
                   </div>
-                  <span className="text-[10px] font-mono bg-amber-900 text-amber-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-mono bg-blue-900 px-2 py-0.5 rounded-xs">
                     Shop
                   </span>
-                </motion.button>
+                </button>
 
-                {navLinks.map((link, idx) => (
-                  <motion.a
+                {navLinks.map((link) => (
+                  <a
                     key={link.label}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: (idx + 1) * 0.05, duration: 0.3 }}
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavClick(link.href);
                     }}
-                    className="text-sm uppercase tracking-widest font-medium text-stone-800 hover:text-amber-800 py-2 border-b border-stone-200/60 flex items-center justify-between cursor-pointer"
+                    className="text-xs uppercase tracking-wider font-bold text-stone-800 hover:text-blue-700 py-3 border-b border-stone-100 flex items-center justify-between cursor-pointer"
                   >
                     <span>{link.label}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
-                  </motion.a>
+                  </a>
                 ))}
               </nav>
 
-              <div className="pt-3 flex items-center justify-between gap-4">
+              <div className="pt-2">
                 <button
                   onClick={handleAdminClick}
-                  className="w-full py-2.5 px-4 bg-stone-900 text-stone-100 text-xs uppercase tracking-wider font-medium rounded-sm flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 bg-[#111827] text-white text-xs uppercase tracking-wider font-semibold rounded-xs flex items-center justify-center gap-2"
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>Curator Management Portal</span>

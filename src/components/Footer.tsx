@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Lock, ShieldCheck, ArrowRight, Check } from 'lucide-react';
+import { Lock, ShieldCheck, ArrowRight, Check, MapPin, Mail, Phone, Ticket } from 'lucide-react';
 import { useGallery } from '../context/GalleryContext';
 
 export const Footer: React.FC = () => {
@@ -23,170 +23,165 @@ export const Footer: React.FC = () => {
     }
   };
 
-  const footerColumnVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
-  };
-
   return (
-    <footer className="bg-[#1C1A19] text-stone-300 pt-16 pb-12 border-t border-stone-800 overflow-hidden">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-          },
-        }}
-        className="max-w-7xl mx-auto px-6"
-      >
+    <footer className="bg-[#111827] text-stone-300 pt-16 pb-12 border-t border-stone-800">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-stone-800">
           {/* Brand & Wordmark */}
-          <motion.div variants={footerColumnVariants} className="lg:col-span-4 space-y-4">
-            <span className="text-xl font-cormorant tracking-[0.16em] uppercase text-stone-100 block font-medium smooth-font">
-              Dhurva's Art Studio & Gallery
-            </span>
-            <p className="text-xs text-stone-400 leading-relaxed max-w-sm smooth-font">
-              An international studio and gallery representing contemporary masters of painting and sculpture. All acquisitions are curated, certified, and dispatched via temperature-regulated fine art courier.
-            </p>
-            <div className="pt-2 text-xs text-stone-500 font-mono space-y-1">
-              <div>Paris · London · Geneva · New York</div>
-              <div>© 2026 Dhurva's Art Studio & Gallery. All rights reserved.</div>
+          <div className="lg:col-span-4 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-blue-600 text-white font-bold text-sm flex items-center justify-center rounded-xs">
+                KNMA
+              </div>
+              <div>
+                <span className="text-base font-bold uppercase tracking-tight text-white block">
+                  Kiran Nadar Museum of Art
+                </span>
+                <span className="text-[11px] uppercase tracking-wider text-stone-400 font-semibold block">
+                  & Dhurva Contemporary Studio
+                </span>
+              </div>
             </div>
-          </motion.div>
+
+            <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
+              India's first private museum of modern and contemporary art. A non-commercial philanthropic institution bridging South Asian heritage and the global public through exhibitions, research, public education, and acquisitions.
+            </p>
+
+            <div className="pt-2 text-xs text-stone-500 font-mono space-y-1">
+              <div>Saket, New Delhi · Sector 126, Noida · Paris Atelier</div>
+              <div>© 2026 Kiran Nadar Museum of Art (KNMA). All rights reserved.</div>
+            </div>
+          </div>
 
           {/* Quick Nav */}
-          <motion.div variants={footerColumnVariants} className="lg:col-span-2 space-y-3 text-xs">
-            <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
-              Collection & Salon
+          <div className="lg:col-span-2 space-y-3 text-xs">
+            <h4 className="uppercase tracking-wider font-bold text-white font-mono text-[11px]">
+              Museum & Salon
             </h4>
-            <ul className="space-y-2 text-stone-400">
+            <ul className="space-y-2 text-stone-400 font-medium">
               <li>
                 <button
                   onClick={() => setCurrentPage('showcase')}
-                  className="inline-block text-amber-300 font-medium hover:text-amber-200 hover:translate-x-1 transition-all cursor-pointer text-left"
+                  className="inline-block text-blue-400 font-bold hover:text-blue-300 transition-colors cursor-pointer text-left"
                 >
-                  Showcase & Purchasing Salon ★
+                  Showcase & Acquisitions ★
                 </button>
               </li>
               <li>
-                <a href="#curated-works" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white hover:translate-x-1 transition-all cursor-pointer">
-                  Original Paintings
+                <a href="#exhibitions" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white transition-colors cursor-pointer">
+                  Current Exhibitions
                 </a>
               </li>
               <li>
-                <a href="#curated-works" className="inline-block hover:text-white hover:translate-x-1 transition-all">
-                  Bronze & Stone Sculptures
+                <a href="#curated-works" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white transition-colors cursor-pointer">
+                  Permanent Collection
                 </a>
               </li>
               <li>
-                <a href="#exhibitions" className="inline-block hover:text-white hover:translate-x-1 transition-all">
-                  The Vernissage 2026
+                <a href="#studio-artists" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white transition-colors cursor-pointer">
+                  Studio Masters
                 </a>
               </li>
               <li>
-                <a href="#craftsmanship" className="inline-block hover:text-white hover:translate-x-1 transition-all">
-                  Provenance Ledger
+                <a href="#programs" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white transition-colors cursor-pointer">
+                  Workshops & Talks
+                </a>
+              </li>
+              <li>
+                <a href="#visit" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white transition-colors cursor-pointer">
+                  Visitor Guidelines
                 </a>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Salons & Hours */}
-          <motion.div variants={footerColumnVariants} className="lg:col-span-3 space-y-3 text-xs">
-            <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
-              Gallery Salons
+          {/* Pavilions & Hours */}
+          <div className="lg:col-span-3 space-y-3 text-xs">
+            <h4 className="uppercase tracking-wider font-bold text-white font-mono text-[11px]">
+              Museum Pavilions
             </h4>
-            <div className="text-stone-400 space-y-2">
+            <div className="text-stone-400 space-y-2.5">
               <div>
-                <strong className="text-stone-200 block">Paris Pavillon:</strong>
-                <span>18 Place Vendôme, 75001 Paris</span>
+                <strong className="text-white block">KNMA Saket (New Delhi):</strong>
+                <span>145, DLF South Court Mall, Saket District Centre</span>
               </div>
               <div>
-                <strong className="text-stone-200 block">London Mayfair:</strong>
-                <span>14 Berkeley Square, London W1J</span>
+                <strong className="text-white block">KNMA Noida (Sector 126):</strong>
+                <span>Plot No. 3A, Sector 126, Noida, UP 201301</span>
               </div>
-              <div className="text-stone-500 font-mono pt-1">
-                Tuesday – Sunday 10:00 – 19:00 CET
+              <div className="text-amber-400 font-mono pt-1 text-[11px] font-semibold">
+                Open Tuesday – Sunday 10:30 AM – 6:30 PM<br />
+                Admission is Always Free
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Curatorial Gazette / Newsletter */}
-          <motion.div variants={footerColumnVariants} className="lg:col-span-3 space-y-3">
-            <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
-              Curatorial Gazette
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="uppercase tracking-wider font-bold text-white font-mono text-[11px]">
+              KNMA Art Bulletin
             </h4>
-            <p className="text-xs text-stone-400 smooth-font">
-              Receive private catalog previews and invitations to vernissages before public release.
+            <p className="text-xs text-stone-400">
+              Receive updates on upcoming retrospective vernissages, workshop registrations, and collector acquisitions.
             </p>
             {subscribed ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="p-3 bg-stone-900 border border-emerald-500/50 text-stone-200 text-xs rounded-sm flex items-center gap-2"
-              >
+              <div className="p-3 bg-stone-900 border border-emerald-500/50 text-stone-200 text-xs rounded-xs flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-400" />
-                <span>Subscription confirmed. Portfolio enclosed soon.</span>
-              </motion.div>
+                <span>Subscription confirmed. Bulletin will arrive shortly.</span>
+              </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
                 <input
                   type="email"
                   required
-                  placeholder="collector@domain.com"
+                  placeholder="name@domain.com"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="w-full p-2.5 bg-stone-900 border border-stone-700 text-stone-100 text-xs rounded-sm focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 focus:outline-none transition-all"
+                  className="w-full p-2.5 bg-stone-900 border border-stone-700 text-white text-xs rounded-xs focus:border-blue-500 focus:outline-hidden transition-all"
                 />
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   type="submit"
                   aria-label="Subscribe"
-                  className="px-3.5 bg-stone-100 hover:bg-white text-stone-900 text-xs font-semibold rounded-sm transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                  className="px-3.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xs transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
-                </motion.button>
+                </button>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
 
-        {/* Operational Bottom Ribbon & Discreet Admin Entry */}
+        {/* Operational Bottom Ribbon */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 font-mono">
-          <div className="flex items-center gap-4">
-            <span>Conservation Framing Included</span>
+          <div className="flex flex-wrap items-center gap-3">
+            <span>Free Public Admission</span>
             <span>·</span>
-            <span>Escrow & Transit Insurance</span>
+            <span>Wheelchair Accessible</span>
             <span>·</span>
-            <span>Archival Accessioning</span>
+            <span>Research Library</span>
+            <span>·</span>
+            <span>Insured Courier Escort</span>
           </div>
 
           {/* Password-protected Admin Panel trigger */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <button
             onClick={handleCuratorClick}
-            className="flex items-center gap-1.5 text-stone-400 hover:text-stone-100 transition-colors cursor-pointer py-1 px-2.5 border border-stone-800 rounded-sm hover:border-stone-600 bg-stone-900/60"
+            className="flex items-center gap-1.5 text-stone-400 hover:text-white transition-colors cursor-pointer py-1 px-2.5 border border-stone-800 rounded-xs hover:border-stone-600 bg-stone-900/60"
           >
             {isAdminLoggedIn ? (
               <>
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-amber-300">Curator Backstage (Unlocked)</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+                <span className="text-blue-300">Curator Portal (Active)</span>
               </>
             ) : (
               <>
                 <Lock className="w-3.5 h-3.5" />
-                <span>Curator Backstage Access</span>
+                <span>Curator Backstage</span>
               </>
             )}
-          </motion.button>
+          </button>
         </div>
-      </motion.div>
+      </div>
     </footer>
   );
 };

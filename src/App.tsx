@@ -15,6 +15,8 @@ import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { AdminAuthModal } from './components/AdminAuthModal';
 import { AdminPanel } from './components/AdminPanel';
 
+import { ProgramsSection } from './components/ProgramsSection';
+import { PlanYourVisitSection } from './components/PlanYourVisitSection';
 import { WelcomingIntroPopup } from './components/WelcomingIntroPopup';
 import { ShowcasePurchasePage } from './components/ShowcasePurchasePage';
 import { useGallery } from './context/GalleryContext';
@@ -23,11 +25,11 @@ export function AppContent() {
   const { currentPage } = useGallery();
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#1C1917]">
+    <div className="min-h-screen flex flex-col bg-white text-[#111827]">
       {/* 3-Second Smooth Welcoming Popup Overlay */}
       <WelcomingIntroPopup />
 
-      {/* 1-Row 3-Zone Header */}
+      {/* KNMA Navigation Header */}
       <Header />
 
       {/* Main Experience Router: Home vs Showcase & Purchasing Salon */}
@@ -39,17 +41,23 @@ export function AppContent() {
             {/* Welcoming Page Intro & Spotlight */}
             <Hero />
 
-            {/* Curated Masterworks (Paintings & Sculptures) */}
+            {/* Curated Current Exhibition Feature */}
+            <ExhibitionSection />
+
+            {/* Permanent Collection & Acquisitions (Paintings & Sculptures) */}
             <ArtworkGrid />
 
             {/* Dedicated Artists & Portfolios */}
             <ArtistsSection />
 
-            {/* Curated Current Exhibition Feature */}
-            <ExhibitionSection />
+            {/* KNMA Engage: Public Programs, Workshops & Symposiums */}
+            <ProgramsSection />
 
             {/* Provenance, Archival Integrity & Private Salon Appointment */}
             <CuratorialSection />
+
+            {/* Plan Your Visit to Saket & Noida Pavilions */}
+            <PlanYourVisitSection />
           </>
         )}
       </main>
