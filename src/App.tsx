@@ -16,8 +16,12 @@ import { AdminAuthModal } from './components/AdminAuthModal';
 import { AdminPanel } from './components/AdminPanel';
 
 import { WelcomingIntroPopup } from './components/WelcomingIntroPopup';
+import { ShowcasePurchasePage } from './components/ShowcasePurchasePage';
+import { useGallery } from './context/GalleryContext';
 
 export function AppContent() {
+  const { currentPage } = useGallery();
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#1C1917]">
       {/* 3-Second Smooth Welcoming Popup Overlay */}
@@ -26,22 +30,28 @@ export function AppContent() {
       {/* 1-Row 3-Zone Header */}
       <Header />
 
-      {/* Main Welcoming Experience & Storefront */}
+      {/* Main Experience Router: Home vs Showcase & Purchasing Salon */}
       <main className="flex-1">
-        {/* Welcoming Page Intro & Spotlight */}
-        <Hero />
+        {currentPage === 'showcase' ? (
+          <ShowcasePurchasePage />
+        ) : (
+          <>
+            {/* Welcoming Page Intro & Spotlight */}
+            <Hero />
 
-        {/* Curated Masterworks (Paintings & Sculptures) */}
-        <ArtworkGrid />
+            {/* Curated Masterworks (Paintings & Sculptures) */}
+            <ArtworkGrid />
 
-        {/* Dedicated Artists & Portfolios */}
-        <ArtistsSection />
+            {/* Dedicated Artists & Portfolios */}
+            <ArtistsSection />
 
-        {/* Curated Current Exhibition Feature */}
-        <ExhibitionSection />
+            {/* Curated Current Exhibition Feature */}
+            <ExhibitionSection />
 
-        {/* Provenance, Archival Integrity & Private Salon Appointment */}
-        <CuratorialSection />
+            {/* Provenance, Archival Integrity & Private Salon Appointment */}
+            <CuratorialSection />
+          </>
+        )}
       </main>
 
       {/* Institutional Editorial Footer */}

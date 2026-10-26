@@ -19,8 +19,10 @@ interface GalleryContextType {
   isAdminAuthOpen: boolean;
   isAdminPanelOpen: boolean;
   isRoomSimulatorOpen: boolean;
+  currentPage: 'home' | 'showcase';
   
   // Actions
+  setCurrentPage: (page: 'home' | 'showcase') => void;
   setSelectedArtwork: (artwork: Artwork | null) => void;
   setSelectedArtist: (artist: Artist | null) => void;
   openArtistByNameOrId: (identifier: string) => void;
@@ -105,6 +107,12 @@ export const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [isAdminAuthOpen, setIsAdminAuthOpen] = useState(false);
   const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
   const [isRoomSimulatorOpen, setIsRoomSimulatorOpen] = useState(false);
+  const [currentPage, setCurrentPageState] = useState<'home' | 'showcase'>('home');
+
+  const setCurrentPage = (page: 'home' | 'showcase') => {
+    setCurrentPageState(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const openArtistByNameOrId = (identifier: string) => {
     const found = ARTISTS_DATA.find(
@@ -294,6 +302,8 @@ export const GalleryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         isAdminAuthOpen,
         isAdminPanelOpen,
         isRoomSimulatorOpen,
+        currentPage,
+        setCurrentPage,
         setSelectedArtwork,
         setSelectedArtist,
         openArtistByNameOrId,

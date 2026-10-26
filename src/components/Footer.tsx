@@ -4,7 +4,7 @@ import { Lock, ShieldCheck, ArrowRight, Check } from 'lucide-react';
 import { useGallery } from '../context/GalleryContext';
 
 export const Footer: React.FC = () => {
-  const { isAdminLoggedIn, setIsAdminAuthOpen, setIsAdminPanelOpen } = useGallery();
+  const { isAdminLoggedIn, setIsAdminAuthOpen, setIsAdminPanelOpen, setCurrentPage } = useGallery();
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -61,11 +61,19 @@ export const Footer: React.FC = () => {
           {/* Quick Nav */}
           <motion.div variants={footerColumnVariants} className="lg:col-span-2 space-y-3 text-xs">
             <h4 className="uppercase tracking-[0.2em] font-semibold text-stone-100 font-mono text-[11px]">
-              Collection
+              Collection & Salon
             </h4>
             <ul className="space-y-2 text-stone-400">
               <li>
-                <a href="#curated-works" className="inline-block hover:text-white hover:translate-x-1 transition-all">
+                <button
+                  onClick={() => setCurrentPage('showcase')}
+                  className="inline-block text-amber-300 font-medium hover:text-amber-200 hover:translate-x-1 transition-all cursor-pointer text-left"
+                >
+                  Showcase & Purchasing Salon ★
+                </button>
+              </li>
+              <li>
+                <a href="#curated-works" onClick={() => setCurrentPage('home')} className="inline-block hover:text-white hover:translate-x-1 transition-all cursor-pointer">
                   Original Paintings
                 </a>
               </li>

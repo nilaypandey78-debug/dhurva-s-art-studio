@@ -64,7 +64,7 @@ const artworkCardVariants = {
 };
 
 export const ArtworkGrid: React.FC = () => {
-  const { artworks, artists, setSelectedArtwork, addToCart, startBuyNow } = useGallery();
+  const { artworks, artists, setSelectedArtwork, addToCart, startBuyNow, setCurrentPage } = useGallery();
   const [activeCategory, setActiveCategory] = useState<ArtworkCategory>('all');
   const [selectedArtistFilter, setSelectedArtistFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
@@ -344,6 +344,39 @@ export const ArtworkGrid: React.FC = () => {
             Show All Artists
           </button>
         )}
+      </motion.div>
+
+      {/* Dedicated Showcase & Purchase Salon Callout Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mt-6 mb-8 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-100/50 to-stone-100 border border-amber-300/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-amber-200/80 flex items-center justify-center text-amber-900 shrink-0 shadow-2xs">
+            <Sparkles className="w-4 h-4 text-amber-700 animate-spin" style={{ animationDuration: '8s' }} />
+          </div>
+          <div>
+            <h4 className="text-sm font-cormorant font-bold text-stone-900 tracking-wide">
+              Dedicated Showcase & Purchasing Salon
+            </h4>
+            <p className="text-xs text-stone-600 font-sans">
+              Experience our cinema exhibition wall, live multi-currency converter, bespoke framing atelier, and instant checkout.
+            </p>
+          </div>
+        </div>
+
+        <motion.button
+          whileHover={{ scale: 1.03, x: 2 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => setCurrentPage('showcase')}
+          className="px-4 py-2 bg-gradient-to-r from-stone-900 to-amber-950 hover:from-amber-950 hover:to-stone-900 text-amber-100 text-xs font-semibold uppercase tracking-wider rounded-sm shadow-xs transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+        >
+          <span>Open Showcase & Buy</span>
+          <span className="text-amber-400">→</span>
+        </motion.button>
       </motion.div>
 
       {/* Grid of Artworks */}

@@ -17,7 +17,7 @@ const PIGMENT_MOTES = [
 ];
 
 export const Hero: React.FC = () => {
-  const { setSelectedArtwork, artworks } = useGallery();
+  const { setSelectedArtwork, artworks, setCurrentPage } = useGallery();
   const spotlightArt = artworks[0];
 
   // Orchestrated motion variants for the animated entrance
@@ -320,26 +320,38 @@ export const Hero: React.FC = () => {
 
               <motion.div
                 variants={itemVariants}
-                className="flex items-center gap-4 text-xs tracking-wider uppercase font-medium"
+                className="flex flex-wrap items-center gap-3 text-xs tracking-wider uppercase font-medium"
               >
+                <motion.button
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setCurrentPage('showcase')}
+                  className="px-5 py-3.5 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 hover:from-amber-950 hover:via-stone-900 hover:to-amber-950 text-amber-50 transition-all rounded-md inline-flex items-center gap-2.5 shadow-md hover:shadow-lg hover:shadow-amber-950/20 cursor-pointer ring-1 ring-amber-400/25 animate-shimmer-sweep group font-semibold"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
+                  <span>Showcase & Purchase</span>
+                </motion.button>
+
                 <motion.a
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
                   href="#curated-works"
-                  className="px-5 py-3.5 bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 hover:from-amber-950 hover:via-stone-900 hover:to-amber-950 text-amber-50 transition-all rounded-md inline-flex items-center gap-2.5 shadow-md hover:shadow-lg hover:shadow-amber-950/20 cursor-pointer ring-1 ring-amber-400/25 animate-shimmer-sweep group"
+                  className="px-4 py-3.5 border border-stone-300 hover:border-stone-500 bg-white/80 hover:bg-white text-stone-800 transition-all rounded-md inline-flex items-center gap-2 cursor-pointer shadow-2xs"
                 >
-                  <span>View Collection</span>
-                  <ArrowDown className="w-3.5 h-3.5 text-amber-400 group-hover:translate-y-1 transition-transform" />
+                  <span>Explore Exhibition</span>
+                  <ArrowDown className="w-3.5 h-3.5 text-stone-500" />
                 </motion.a>
+
                 {spotlightArt && (
                   <motion.button
                     whileHover={{ scale: 1.02, y: -1 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedArtwork(spotlightArt)}
-                    className="px-4 py-3.5 border border-amber-300/80 hover:border-amber-500 bg-white/80 hover:bg-white text-stone-800 hover:text-amber-950 transition-all rounded-md inline-flex items-center gap-2 cursor-pointer shadow-2xs hover:shadow-md hover:shadow-amber-500/15"
+                    className="px-3.5 py-3.5 border border-amber-300/80 hover:border-amber-500 bg-amber-50/60 hover:bg-amber-100/80 text-amber-950 transition-all rounded-md inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    title="Inspect featured salon masterwork"
                   >
-                    <Eye className="w-3.5 h-3.5 text-amber-600" />
-                    <span>Inspect Feature</span>
+                    <Eye className="w-3.5 h-3.5 text-amber-700" />
+                    <span>Inspect</span>
                   </motion.button>
                 )}
               </motion.div>

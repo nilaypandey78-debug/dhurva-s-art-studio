@@ -10,6 +10,8 @@ export const Header: React.FC = () => {
     isAdminLoggedIn,
     setIsAdminAuthOpen,
     setIsAdminPanelOpen,
+    currentPage,
+    setCurrentPage,
   } = useGallery();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,6 +42,22 @@ export const Header: React.FC = () => {
     }
   };
 
+  const handleNavClick = (href: string) => {
+    setMobileMenuOpen(false);
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      setTimeout(() => {
+        const id = href.replace('#', '');
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const id = href.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const navLinks = [
     { label: 'Curated Works', href: '#curated-works' },
     { label: 'Studio Artists', href: '#studio-artists' },
@@ -62,21 +80,41 @@ export const Header: React.FC = () => {
       >
         <div className={`max-w-7xl mx-auto px-6 flex items-center justify-between gap-6 transition-all duration-300 ${isScrolled ? 'h-16 md:h-18' : 'h-18 md:h-20'}`}>
           {/* Zone 1: Brand Wordmark */}
-          <a
-            href="#"
-            className="group flex items-center gap-2.5 text-base sm:text-lg md:text-xl font-cormorant tracking-[0.18em] uppercase text-stone-900 whitespace-nowrap shrink-0 hover:text-amber-900 transition-colors smooth-font"
+          <button
+            onClick={() => setCurrentPage('home')}
+            className="group flex items-center gap-2.5 text-base sm:text-lg md:text-xl font-cormorant tracking-[0.18em] uppercase text-stone-900 whitespace-nowrap shrink-0 hover:text-amber-900 transition-colors smooth-font text-left cursor-pointer"
           >
             <span className="w-2 h-2 rounded-full bg-amber-500/80 group-hover:scale-125 transition-transform" />
             <span className="font-semibold">Dhurva's Art Studio & Gallery</span>
-          </a>
+          </button>
 
-          {/* Zone 2: 4-5 clean single-line text navigation links with animated underline */}
-          <nav className="hidden lg:flex items-center gap-7 text-xs uppercase tracking-[0.16em] font-medium text-stone-600">
+          {/* Zone 2: Navigation Links with Dedicated Showcase & Purchase Salon Tab */}
+          <nav className="hidden lg:flex items-center gap-6 text-xs uppercase tracking-[0.16em] font-medium text-stone-600">
+            {/* Dedicated Showcase & Purchase Page Button */}
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => setCurrentPage('showcase')}
+              className={`px-3 py-1.5 rounded-xs transition-all flex items-center gap-1.5 cursor-pointer font-semibold ${
+                currentPage === 'showcase'
+                  ? 'bg-amber-100 text-amber-950 border border-amber-300/80 shadow-2xs ring-1 ring-amber-400/30'
+                  : 'bg-amber-50/70 hover:bg-amber-100/80 text-amber-900 border border-amber-200/80'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+              <span>Showcase & Purchase</span>
+            </motion.button>
+
+            {/* Standard Nav Links */}
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link-animated text-stone-600 hover:text-stone-900 transition-colors whitespace-nowrap shrink-0 py-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className="nav-link-animated text-stone-600 hover:text-stone-900 transition-colors whitespace-nowrap shrink-0 py-1 cursor-pointer"
               >
                 {link.label}
               </a>
@@ -151,15 +189,37 @@ export const Header: React.FC = () => {
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
               <nav className="flex flex-col space-y-3">
+                {/* Mobile Showcase & Purchase Highlight */}
+                <motion.button
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setCurrentPage('showcase');
+                  }}
+                  className="w-full text-left text-sm uppercase tracking-widest font-semibold text-amber-950 bg-amber-100/80 hover:bg-amber-100 p-3 rounded-xs border border-amber-300/80 flex items-center justify-between cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <span>Showcase & Purchase</span>
+                  </div>
+                  <span className="text-[10px] font-mono bg-amber-900 text-amber-100 px-2 py-0.5 rounded-full">
+                    Shop
+                  </span>
+                </motion.button>
+
                 {navLinks.map((link, idx) => (
                   <motion.a
                     key={link.label}
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.3 }}
+                    transition={{ delay: (idx + 1) * 0.05, duration: 0.3 }}
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-sm uppercase tracking-widest font-medium text-stone-800 hover:text-amber-800 py-2 border-b border-stone-200/60 flex items-center justify-between"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link.href);
+                    }}
+                    className="text-sm uppercase tracking-widest font-medium text-stone-800 hover:text-amber-800 py-2 border-b border-stone-200/60 flex items-center justify-between cursor-pointer"
                   >
                     <span>{link.label}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-stone-400" />
